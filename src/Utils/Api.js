@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 export const callMoviesAPI = (title) => {
+    console.log(` URL: http://www.omdbapi.com/?t=${title}&apikey=b0421fa6`);
     return axios.get(`http://www.omdbapi.com/?t=${title}&apikey=b0421fa6`).then(res => {
         console.log("API response is: " ,res); 
         return res;});

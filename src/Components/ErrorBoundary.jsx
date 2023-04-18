@@ -8,7 +8,9 @@ class ErrorBoundary extends React.Component {
   
     static getDerivedStateFromError(error) {
       console.log('ERROR: ', error.message)
-      const errMsg = error.message + "\n\n" + error.stack
+      const errMsg = error.message;
+      // const errMsg = error.message + "\n\n" + error.stack
+
       return { hasError: true ,  errorString:errMsg};
     }
   

@@ -7,10 +7,11 @@ const MainPage = () =>{
     const [shouldCallAPI, setShouldCallAPI] = useState(false);
 
     const movieRes = useMovieAPI(shouldCallAPI,userInput);
-    // console.log("RES: ",movieRes)
+    console.log("RES: ",movieRes)
+    console.log("ENABLED: ",shouldCallAPI)
 
     useEffect(() => {
-        console.log("RES: ",movieRes)
+        // console.log("RES: ",movieRes)
         if(movieRes.isSuccess === true && movieRes.data !== undefined){
             console.log("has property: ",movieRes?.data?.data?.hasOwnProperty('Error'))
             if(movieRes?.data?.data?.hasOwnProperty('Error')){
@@ -20,24 +21,28 @@ const MainPage = () =>{
             //reset state so user can be ready for next input
             setUserInput("")
             setShouldCallAPI(false)
+            console.log("SETTING TO FALSE")
             document.getElementById("movieTitleInput").value = "";
 
         }
-    },[movieRes])
+    },[movieRes.data])
 
     const callAPI = () => {
         if(userInput !== ''){
             setShouldCallAPI(true);
+            console.log("SETTING TO TRUE")
+
         }
     }
 
     const onChange = (event) => {
+        console.log("ITS CHANGING: ", event.target.value)
         setUserInput(event.target.value);
     }
 
     return(
         <>
-           <div className="App">
+           <div className="App container">
                 <h1>Hello Movie Lovers</h1>
                 <hr></hr>
                 <input
@@ -47,12 +52,26 @@ const MainPage = () =>{
                     placeholder="Enter the title of a movie"
                 />
                 <button onClick={callAPI}>Fetch Movie Data</button>
-                {movieRes.isSuccess && (
-                    <>
-                        <h1>{movieData?.Title}</h1>
-                        <img src={movieData?.Poster} alt="movie poster" />
-                    </>
-                )}
+                { movieRes.isFetching === true ? 
+                    (
+                        <>
+                                <div className="center">
+                                    <h1>Loading...</h1>
+                                </div>
+                        </>
+
+                    ) : (
+                        <>
+                            {(movieRes.isSuccess === true) && (
+                                <>
+                                    <h1>{movieData?.Title}</h1>
+                                    <img src={movieData?.Poster} alt="movie poster" />
+                                </>
+                            )}
+                        </>
+                    )
+                }
+                
            </div>
         </>
     )
