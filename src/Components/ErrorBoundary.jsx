@@ -24,7 +24,6 @@ class ErrorBoundary extends React.Component {
                     <h1>Something went wrong, Error is posted below.</h1>
                     <p>{this.state.errorString}</p>
                 </div>
-                
             </div>
        
         );
