@@ -5,9 +5,25 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #cbcbcb;
+  color: #212121;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#loading {
+  font-family: 'Playfair Display', serif;
+}
+
+#title{
+  font-family: 'Playfair Display', serif;
+  color: #FF5722;
+
+}
+
+#titleHR {
+  background-color: coral
 }

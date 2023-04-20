@@ -21,9 +21,9 @@ const MovieCard = (props) => {
             </button>
             <h1>{Title}</h1>
             <hr></hr>
-            <div className={'poster'} >
-                <img src={Poster} alt="movie poster" />
-            </div>
+            
+            <img  className={'poster'} src={Poster} alt="movie poster" />
+            
             <hr></hr>
             <h2>Box Office: {BoxOffice}</h2>
             <hr></hr>

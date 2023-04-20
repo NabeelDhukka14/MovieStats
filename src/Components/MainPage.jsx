@@ -67,21 +67,21 @@ const MainPage = () =>{
     return(
         <>
            <div className="App container">
-                <h1>Hello Movie Lovers</h1>
-                <hr></hr>
+                <h1 id="title">Hello Movie Lovers</h1>
+                <hr id="titleHR"></hr>
                 <input
                     type="text"
                     id="movieTitleInput"
                     onChange={onChange}
                     placeholder="Enter the title of a movie"
                 />
-                <button id="submitButton" onClick={callAPI}>Fetch Movie Data</button>
-                <button id="clearAll" onClick={clearHandler}>Clear All Movies</button>
+                <button className={'ovalButton'} id="submitButton" onClick={callAPI}>Fetch Movie Data</button>
+                <button className={'ovalButton'} id="clearAll" onClick={clearHandler}>Clear All Movies</button>
 
                 { movieRes.isFetching === true ? 
                     (
                         <div className="center">
-                            <h1>Loading...</h1>
+                            <h1 id="loading">Loading...</h1>
                         </div>
 
                     ) : (
