@@ -89,25 +89,14 @@ const MainPage = () =>{
                             <div className="carousel-content">
                                 {/* Render the cards here */}
                                 {(movieRes.isSuccess === true) && (
-                                    <>
-                                        <MovieCard movieData={movieRes?.data?.data} dispatcher={dispatchMovieData}/> 
-                                        <MovieCard movieData={movieRes?.data?.data} dispatcher={dispatchMovieData}/> 
-                                        <MovieCard movieData={movieRes?.data?.data} dispatcher={dispatchMovieData}/> 
-                                    </>
+                                    movieData.map((movie,index) => {
+                                        return(
+                                            <MovieCard key={index} movieData={movie} dispatcher={dispatchMovieData}/>
+                                        )
+                                    })
                                   )}
                             </div>
                         </div>
-                        // <div className="movieContainer">
-                        //     <div className="movies">
-                        //         {(movieRes.isSuccess === true) && (
-                        //             movieData.map((movie,index) => {
-                        //                 return(
-                        //                     <MovieCard key={index} movieData={movie} dispatcher={dispatchMovieData}/> 
-                        //                 )
-                        //             })
-                        //         )}
-                        //     </div>    
-                        // </div>
                     )
                 }
                 
