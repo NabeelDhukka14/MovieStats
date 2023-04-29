@@ -11,12 +11,14 @@ const MainPage = () =>{
     const [movieData, dispatchMovieData] = useReducer(movieReducer, [])
     const [userInput, setUserInput] = useState("")
     const [shouldCallAPI, setShouldCallAPI] = useState(false);
-
+    const [movieNotFound, setMovieNotFound] = useState(false);
+    const [badMovieName, setBadMovieName] = useState("")
     const movieRes = useMovieAPI(shouldCallAPI,userInput);
-    console.log("RES: ",movieRes)
-    console.log("ENABLED: ",shouldCallAPI)
-    console.log("movieData: ",movieData)
-
+    // console.log("RES: ",movieRes)
+    // console.log("ENABLED: ",shouldCallAPI)
+    // console.log("movieData: ",movieData)
+    console.log("movieNotFound: ",movieNotFound)
+   
     //Allow user to submit movie title by pressing "enter" key instead of pressing button via mouse
     useEffect(() =>{
         var input = document.getElementById("movieTitleInput");
@@ -33,16 +35,21 @@ const MainPage = () =>{
         if(movieRes.isSuccess === true && movieRes.data !== undefined){
             console.log("has property: ",movieRes?.data?.data?.hasOwnProperty('Error'))
             if(movieRes?.data?.data?.hasOwnProperty('Error')){
-                throw Error("Could not find movie with name "+userInput )
-            }
+                // throw Error("Could not find movie with name "+userInput )
+                setBadMovieName(userInput);
+                setMovieNotFound(true)
+            }else{
             // setMovieData(movieRes?.data?.data)
             let reducerAction = {type: "ADD", value: movieRes?.data?.data}
             dispatchMovieData(reducerAction)
             //reset state so user can be ready for next input
             setUserInput("")
+            setMovieNotFound(false)
+            setBadMovieName("")
             setShouldCallAPI(false)
             console.log("SETTING TO FALSE")
             document.getElementById("movieTitleInput").value = "";
+            }
 
         }
     },[movieRes.data])
@@ -54,13 +61,13 @@ const MainPage = () =>{
     const callAPI = () => {
         if(userInput !== ''){
             setShouldCallAPI(true);
-            console.log("SETTING TO TRUE")
+            movieRes.refetch()
 
         }
     }
 
     const onChange = (event) => {
-        console.log("ITS CHANGING: ", event.target.value)
+        // console.log("ITS CHANGING: ", event.target.value)
         setUserInput(event.target.value);
     }
 
@@ -77,6 +84,8 @@ const MainPage = () =>{
                 />
                 <button className={'ovalButton'} id="submitButton" onClick={callAPI}>Fetch Movie Data</button>
                 <button className={'ovalButton'} id="clearAll" onClick={clearHandler}>Clear All Movies</button>
+
+                {movieNotFound &&  <h2 className="errMsg">Could not find movie with name "{badMovieName}". Please Try a diffrent movie name</h2>}
 
                 { movieRes.isFetching === true ? 
                     (
