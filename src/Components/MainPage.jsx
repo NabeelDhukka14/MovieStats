@@ -13,11 +13,9 @@ const MainPage = () =>{
     const [shouldCallAPI, setShouldCallAPI] = useState(false);
     const [movieNotFound, setMovieNotFound] = useState(false);
     const [badMovieName, setBadMovieName] = useState("")
+    
     const movieRes = useMovieAPI(shouldCallAPI,userInput);
-    // console.log("RES: ",movieRes)
-    // console.log("ENABLED: ",shouldCallAPI)
-    // console.log("movieData: ",movieData)
-    console.log("movieNotFound: ",movieNotFound)
+    
    
     //Allow user to submit movie title by pressing "enter" key instead of pressing button via mouse
     useEffect(() =>{
@@ -31,23 +29,18 @@ const MainPage = () =>{
     })
 
     useEffect(() => {
-        // console.log("RES: ",movieRes)
         if(movieRes.isSuccess === true && movieRes.data !== undefined){
             console.log("has property: ",movieRes?.data?.data?.hasOwnProperty('Error'))
             if(movieRes?.data?.data?.hasOwnProperty('Error')){
-                // throw Error("Could not find movie with name "+userInput )
                 setBadMovieName(userInput);
                 setMovieNotFound(true)
             }else{
-            // setMovieData(movieRes?.data?.data)
             let reducerAction = {type: "ADD", value: movieRes?.data?.data}
             dispatchMovieData(reducerAction)
-            //reset state so user can be ready for next input
             setUserInput("")
             setMovieNotFound(false)
             setBadMovieName("")
             setShouldCallAPI(false)
-            console.log("SETTING TO FALSE")
             document.getElementById("movieTitleInput").value = "";
             }
 
@@ -67,7 +60,6 @@ const MainPage = () =>{
     }
 
     const onChange = (event) => {
-        // console.log("ITS CHANGING: ", event.target.value)
         setUserInput(event.target.value);
     }
 
